@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 
@@ -30,4 +31,19 @@ for item in $y; do
 		cp -ar $item $BackUp_Dir/$item 
     fi
 done
+
+# Check there is any file that is not in the Current_Dir and remove them from the BackUp_Dir.
+echo -e "\n\n\e[1;32m..Removed Files from BackUp..\e[0m"
+
+for file in $(find $BackUp_Dir -type f -not -name '*.git');
+do
+    filestr=`basename $file`
+
+    if [ `ls -LR $Current_Dir | grep -c $filestr` -eq 0 ]; then
+    	rm $file
+        echo "$filestr is removed from the $file"       
+    fi
+done
+
+
 
